@@ -44,16 +44,16 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 3) { ?>
 						<li class="nav-item">
-							<a class="nav-link mr-10 menu " id="keloladokter" href="./read.php"><i class=""></i>Kelola Data Dokter</a>
+							<a class="nav-link mr-10 menu " id="keloladokter" href="../dokter/read.php"><i class=""></i>Kelola Data Dokter</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link menu" id="kelolaakun" href="../akun/read.php"><i class=""></i>Kelola Akun</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu active" id="kelolakamar" href="./adminWeb/kamar/kelolakamar.php"><i class=""></i>Kelola kamar</a>
+							<a class="nav-link menu active" id="kelolakamar" href="./read.php"><i class=""></i>Kelola kamar</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="inputobat" href="./adminWeb/obat/inputobat.php"><i class=""></i>Input Data Obat</a>
+							<a class="nav-link menu" id="inputobat" href="../obat/read.php"><i class=""></i>Kelola Obat</a>
 						</li>
 
 					<?PHP } ?>

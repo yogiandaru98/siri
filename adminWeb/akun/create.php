@@ -50,10 +50,10 @@ if ($_SESSION['username'] == '') {
 							<a class="nav-link menu active" id="kelolaakun" href="./read.php"><i class=""></i>Kelola Akun</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="kelolabiaya" href="./adminWeb/biaya/kelolabiaya.php"><i class=""></i>Kelola Biaya</a>
+							<a class="nav-link menu" id="kelolakamar" href="./kamar/read.php"><i class=""></i>Kelola Kamar</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="inputobat" href="./adminWeb/obat/inputobat.php"><i class=""></i>Input Data Obat</a>
+							<a class="nav-link menu" id="inputobat" href="./obat/read.php"><i class=""></i>Kelola Obat</a>
 						</li>
 
 					<?PHP } ?>

@@ -48,7 +48,7 @@ if ($_SESSION['username'] == '') {
 							<a class="nav-link menu" id="kelolabiaya" href="../biaya/read.php"><i class=""></i>Kelola Biaya</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="inputobat" href="./inputobat.php"><i class=""></i>Input Data Obat</a>
+							<a class="nav-link menu" id="inputobat" href="../obat/read.php"><i class=""></i>Kelola Obat</a>
 						</li>
 
 					<?PHP } ?>

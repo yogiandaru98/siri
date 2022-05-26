@@ -38,7 +38,7 @@ if ($_SESSION['username'] == '') {
 				</a>
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0 d-flex align-items-center">
 					<li class="nav-item">
-						<a class="nav-link menu active" id="menuHome" href="home.php">Home</a>
+						<a class="nav-link menu active" id="menuHome" href="index.php">Home</a>
 					</li>
 
 
@@ -50,10 +50,10 @@ if ($_SESSION['username'] == '') {
 							<a class="nav-link menu" id="kelolaakun" href="./adminWeb/akun/read.php"><i class=""></i>Kelola Akun</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="kelolabiaya" href="./adminWeb/biaya/kelolabiaya.php"><i class=""></i>Kelola Biaya</a>
+							<a class="nav-link menu" id="kelolabiaya" href="./adminWeb/kamar/read.php"><i class=""></i>Kelola Kamar</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="inputobat" href="./adminWeb/obat/inputobat.php"><i class=""></i>Input Data Obat</a>
+							<a class="nav-link menu" id="inputobat" href="./adminWeb/obat/read.php"><i class=""></i>Kelola Obat</a>
 						</li>
 
 					<?PHP } ?>
@@ -88,10 +88,10 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 5) { ?>
 						<li class="nav-item">
-							<a class="nav-link menu" id="tindakan" href="./dokter/tindakan.php"><i class=""></i>Tindakan</a>
+							<a class="nav-link menu" id="tindakan" href="./dokter/tindakan/read.php"><i class=""></i>Tindakan</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="resepobat" href="./dokter/resepobat.php"><i class=""></i>Resep Obat</a>
+							<a class="nav-link menu" id="resepobat" href="./dokter/resep/update.php?akun_id=<?=$_SESSION['id_akun']?>"><i class=""></i>Resep Obat</a>
 						</li>
 					<?PHP } ?>
 
