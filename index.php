@@ -79,10 +79,10 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 4) { ?>
 						<li class="nav-item">
-							<a class="nav-link menu" id="kelolamedicalrecord" href="./perawat/kelolamedicalrecord.php"><i class=""></i>Kelola Medical Record</a>
+							<a class="nav-link menu" id="kelolamedicalrecord" href="./perawat/rekapmedis/read.php" ><i class=""></i>Kelola Medical Record</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="penggunaanobat" href="./perawat/penggunaanobat.php"><i class=""></i>Penggunaan Obat</a>
+							<a class="nav-link menu" id="penggunaanobat" href="./perawat/penggunaanObat/read.php"><i class=""></i>Penggunaan Obat</a>
 						</li>
 					<?PHP } ?>
 
