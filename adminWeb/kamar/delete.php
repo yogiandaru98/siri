@@ -43,7 +43,7 @@ if ($_SESSION['username'] == '') {
 							<a class="nav-link mr-10 menu " id="keloladokter" href="./read.php"><i class=""></i>Kelola Data Dokter</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu active" id="kelolaakun" href="../akun/read.php"><i class=""></i>Kelola Akun</a>
+							<a class="nav-link menu" id="kelolaakun" href="../akun/read.php"><i class=""></i>Kelola Akun</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link menu active" id="kelolakamar" href="./adminWeb/kamar/kelolakamar.php"><i class=""></i>Kelola kamar</a>
@@ -108,7 +108,7 @@ if ($_SESSION['username'] == '') {
 
 
 					<li class="nav-item">
-						<a class="nav-link menu" id="logout" href="./auth/sLogout.php"><i class=""></i>Logout</a>
+						<a class="nav-link menu" id="logout" href="../../auth/sLogout.php"><i class=""></i>Logout</a>
 					</li>
 				</ul>
 			</div>
@@ -118,31 +118,31 @@ if ($_SESSION['username'] == '') {
 $pdo = pdo_connect_mysql();
 $msg = '';
 
-if (isset($_GET['kd_dokter'])) {
+if (isset($_GET['no_kamar'])) {
 
-    $stmt = $pdo->prepare('SELECT * FROM dokter WHERE kd_dokter = ?');
-    $stmt->execute([$_GET['kd_dokter']]);
-    $dokter = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$dokter) {
-        exit('Dokter doesn\'t exist with that kd_dokter!');
+    $stmt = $pdo->prepare('SELECT * FROM kamar WHERE no_kamar = ?');
+    $stmt->execute([$_GET['no_kamar']]);
+    $kamar = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$kamar) {
+        exit('Dokter doesn\'t exist with that no_kamar!');
     }
 
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
 
-            $stmt = $pdo->prepare('DELETE FROM dokter WHERE kd_dokter = ?');
-            $stmt->execute([$_GET['kd_dokter']]);
+            $stmt = $pdo->prepare('DELETE FROM kamar WHERE no_kamar = ?');
+            $stmt->execute([$_GET['no_kamar']]);
             // header("Refresh:0");
             header('Location: ./read.php');
             // $msg = header('Location: index.php');
         } else {
-
+			header('Location: ./read.php');
             // header('Location: ../../index.php');
             exit;
         }
     }
 } else {
-    exit('No kd_dokter specified!');
+    exit('No no_kamar specified!');
 }
 ?>
 
@@ -150,14 +150,14 @@ if (isset($_GET['kd_dokter'])) {
 <!--  -->
 
 <div class="content delete">
-	<h2>Delete Dokter #<?=$dokter['kd_dokter']?></h2>
+	<h2>Delete Kamar #<?=$kamar['no_kamar']?></h2>
     <?php if ($msg): ?>
     <p><?=$msg?></p>
     <?php else: ?>
-	<p>Anda yakin ingin menghapus dokter <?=$dokter['nama_dokter']?>?</p>
+	<p>Anda yakin ingin menghapus kamar <?=$kamar['no_kamar']?>?</p>
     <div class="yesno">
-    <a  href="delete.php?kd_dokter=<?=$dokter['kd_dokter']?>&confirm=yes">Yes</a>
-    <a href="delete.php?kd_dokter=<?=$dokter['kd_dokter']?>&confirm=no">No</a>
+    <a  href="delete.php?no_kamar=<?=$kamar['no_kamar']?>&confirm=yes">Yes</a>
+    <a href="delete.php?no_kamar=<?=$kamar['no_kamar']?>&confirm=no">No</a>
     </div>
     <?php endif; ?>
 </div>

@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -113,56 +112,56 @@ if ($_SESSION['username'] == '') {
 				</ul>
 			</div>
 		</nav>
-<?php
+		<?php
 
- include("../../db/func.php");
+		include("../../db/func.php");
 
- $pdo = pdo_connect_mysql();
-//  session_start();
-$msg = '';
+		$pdo = pdo_connect_mysql();
+		//  session_start();
+		$msg = '';
 
-if (isset($_GET['id_akun'])) {
-    if (!empty($_POST)) {
-		$id_akun = isset($_POST['id_akun']) && !empty($_POST['id_akun']) && $_POST['id_akun'] != 'auto' ? $_POST['id_akun'] : NULL;
+		if (isset($_GET['id_akun'])) {
+			if (!empty($_POST)) {
+				$id_akun = isset($_POST['id_akun']) && !empty($_POST['id_akun']) && $_POST['id_akun'] != 'auto' ? $_POST['id_akun'] : NULL;
 
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
-		$role_id = isset($_POST['role_id']) ? $_POST['role_id'] : '';
-		$password = password_hash($password, PASSWORD_DEFAULT);
-        
-
-        $stmt = $pdo->prepare('UPDATE akun SET id_akun = ?, username = ?, password = ?, role_id = ? WHERE id_akun = ?');
-        $stmt->execute([$id_akun, $username, $password, $role_id , $_GET['id_akun']]);
-        $msg = header('Location: ./read.php');;
-    }
- 
-    $stmt = $pdo->prepare('SELECT * FROM akun WHERE id_akun = ?');
-    $stmt->execute([$_GET['id_akun']]);
-    $akun = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$akun) {
-        exit('akun doesn\'t exist with that id_akun!');
-    }
-} else {
-    exit('No id_akun specified!');
-}
-?>
+				$username = isset($_POST['username']) ? $_POST['username'] : '';
+				$password = isset($_POST['password']) ? $_POST['password'] : '';
+				$role_id = isset($_POST['role_id']) ? $_POST['role_id'] : '';
+				$password = password_hash($password, PASSWORD_DEFAULT);
 
 
-<div class="content update">
-	<h2>Update Akun</h2>
-    <form action="./update.php?id_akun=<?=$akun['id_akun']?>" method="post">
-        <label for="id_akun">ID AKUN</label>
-        <!-- <label for="akun_id">ID Akun</label> -->
-        <label for="username">USERNAME</label>
-        <input type="text" name="id_akun" value="<?=$akun['id_akun']?>" id="id_akun">
+				$stmt = $pdo->prepare('UPDATE akun SET id_akun = ?, username = ?, password = ?, role_id = ? WHERE id_akun = ?');
+				$stmt->execute([$id_akun, $username, $password, $role_id, $_GET['id_akun']]);
+				$msg = header('Location: ./read.php');;
+			}
 
-        <input type="text" name="username" value="<?=$akun['username']?>" id="username">
-        <label>ROLE</label>
-		<label for="password">PASSWORD</label>
-		<select name="role_id" id="role_id" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
-			<?php
+			$stmt = $pdo->prepare('SELECT * FROM akun WHERE id_akun = ?');
+			$stmt->execute([$_GET['id_akun']]);
+			$akun = $stmt->fetch(PDO::FETCH_ASSOC);
+			if (!$akun) {
+				exit('akun doesn\'t exist with that id_akun!');
+			}
+		} else {
+			exit('No id_akun specified!');
+		}
+		?>
 
-include("../db/func.php");
+
+		<div class="content update">
+			<h2>Update Akun</h2>
+			<form action="./update.php?id_akun=<?= $akun['id_akun'] ?>" method="post">
+				<label for="id_akun">ID AKUN</label>
+				<!-- <label for="akun_id">ID Akun</label> -->
+				<label for="username">USERNAME</label>
+				<input type="text" name="id_akun" value="<?= $akun['id_akun'] ?>" id="id_akun">
+
+				<input type="text" name="username" value="<?= $akun['username'] ?>" id="username">
+				<label>ROLE</label>
+				<label for="password">PASSWORD</label>
+				<select name="role_id" id="role_id" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+					<?php
+
+					include("../db/func.php");
 					$pdo = pdo_connect_mysql();
 					// $msg = '';
 					$sql = "SELECT * FROM roles ORDER BY id_role ASC";
@@ -170,23 +169,21 @@ include("../db/func.php");
 					foreach ($data as $row) {
 						if ($row['id_role'] == $akun['role_id']) {
 							echo "<option selected='selected' value=$akun[role_id] >$akun[role_id]-$row[role_name]</option>";
-							
-						}else{
+						} else {
 							echo "<option value=$row[id_role] >$row[id_role]-$row[role_name]</option>";
-
 						}
 					}
 					?>
 
-</select>
-<input type="password" name="password" value="<?=$akun['password']?>" id="password">
-        <label></label>
+				</select>
+				<input type="password" name="password" value="<?= $akun['password'] ?>" id="password">
+				<label></label>
 
-        <label></label>
-        <input onclick="myFunction()" type="submit" value="Update" >
-    </form>
+				<label></label>
+				<input onclick="myFunction()" type="submit" value="Update">
+			</form>
 
-</div>
-<?PHP
-} 
-?>
+		</div>
+	<?PHP
+}
+	?>

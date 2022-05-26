@@ -136,7 +136,7 @@ if (isset($_GET['kd_dokter'])) {
             header('Location: ./read.php');
             // $msg = header('Location: index.php');
         } else {
-
+			header('Location: ./read.php');
             // header('Location: ../../index.php');
             exit;
         }

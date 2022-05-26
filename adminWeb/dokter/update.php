@@ -108,7 +108,7 @@ if ($_SESSION['username'] == '') {
 
 
 					<li class="nav-item">
-						<a class="nav-link menu" id="logout" href="./auth/sLogout.php"><i class=""></i>Logout</a>
+						<a class="nav-link menu" id="logout" href="../../auth/sLogout.php"><i class=""></i>Logout</a>
 					</li>
 				</ul>
 			</div>
