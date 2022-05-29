@@ -134,47 +134,57 @@ if ($_SESSION['username'] == '') {
 
 
 
-		$stmt = $pdo->prepare('SELECT * FROM penggunaan_obat ORDER BY id_penggunaan_obat LIMIT :current_page, :record_per_page');
+		$stmt = $pdo->prepare('SELECT * FROM rekap_medis ORDER BY no_rekap_medis LIMIT :current_page, :record_per_page');
 		$stmt->bindValue(':current_page', ($page - 1) * $records_per_page, PDO::PARAM_INT);
 		$stmt->bindValue(':record_per_page', $records_per_page, PDO::PARAM_INT);
 		$stmt->execute();
 
-		$Penggunaans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$rekapmediss = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$stmt2 = $pdo->prepare('SELECT * FROM tindakan ORDER BY kd_tindakan');
+		$stmt2->execute();
+		$tindakan = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 
-
-		$num_kamars = $pdo->query('SELECT COUNT(*) FROM penggunaan_obat')->fetchColumn();
+		$num_kamars = $pdo->query('SELECT COUNT(*) FROM rekap_medis')->fetchColumn();
 		?>
 
 		<div class="content read">
-			<h2>Data Penggunaan Obat</h2>
-			<a href="./create.php" class="menu create-dokter" id="tambahDokter">Tambah Data Penggunaan Obat</a>
+			<h2>Data Rekap Medis</h2>
+			<a href="./create.php" class="menu create-dokter" id="tambahDokter">Tambah Data Rekap Medis</a>
 			<table>
 				<thead>
 					<tr>
-						<td>ID</td>
-						<td>KODE OBAT</td>
-						<td>NO REKAPMEDIS</td>
-						<td>TANGGAL PEMBERIAN</td>
-						<td>JUMLAH</td>
-						<td>HARGA</td>
+						<td>NO REKAP</td>
+						<td>KODE DOKTER</td>
+						<td>ID PASIEN</td>
+						<td>KD TINDAKAN</td>
+						<td>TANGGAL PRIKSA</td>
+						<td>RIWAYAT PENYAKIT</td>
+						<td>DIAGNOSA</td>
+						<td>BIAYA</td>
 						<td></td>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($Penggunaans as $penggunaan) : ?>
+					<?php foreach ($rekapmediss as $rekapmedis) : ?>
+					
 						<tr>
-							<td><?= $penggunaan['id_penggunaan_obat'] ?></td>
-							<td><?= $penggunaan['kd_obat'] ?></td>
-							<td><?= $penggunaan['no_rekap_medis'] ?></td>
-							<td><?= $penggunaan['tanggal_pemberian'] ?></td>
-							<td><?= $penggunaan['jumlah'] ?></td>
-							<td><?= rupiah($penggunaan['harga']) ?></td>
+							<td><?= $rekapmedis['no_rekap_medis'] ?></td>
+
+							<td><?= $rekapmedis['kd_dokter'] ?></td>
+							<td><?= $rekapmedis['kd_tindakan'] ?></td>
+							<td><?= $rekapmedis['id_pasien'] ?></td>
+							<td><?= $rekapmedis['tanggal_periksa'] ?></td>
+							<td><?= $rekapmedis['riwayat_penyakit'] ?></td>
+							<td><?= $rekapmedis['diagnose'] ?></td>
+							
+							<td><?= rupiah($rekapmedis['biaya']) ?></td>
 							<td class="actions">
-								<a href="update.php?id_penggunaan_obat=<?= $penggunaan['id_penggunaan_obat'] ?>" class="menu edit" id="edit"><i class="fas fa-pen fa-xs"></i></a>
-								<a href="delete.php?id_penggunaan_obat=<?= $penggunaan['id_penggunaan_obat'] ?>" class="menu trash" id="hapus"><i class="fas fa-trash fa-xs"></i></a>
+								<a href="update.php?no_rekap_medis=<?= $rekapmedis['no_rekap_medis'] ?>" class="menu edit" id="edit"><i class="fas fa-pen fa-xs"></i></a>
+								<a href="delete.php?no_rekap_medis=<?= $rekapmedis['no_rekap_medis'] ?>" class="menu trash" id="hapus"><i class="fas fa-trash fa-xs"></i></a>
 							</td>
 						</tr>
+
 					<?php endforeach; ?>
 				</tbody>
 			</table>

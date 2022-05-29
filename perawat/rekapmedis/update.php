@@ -120,96 +120,110 @@ if ($_SESSION['username'] == '') {
 		//  session_start();
 		$msg = '';
 
-		if (isset($_GET['id_penggunaan_obat'])) {
+		if (isset($_GET['no_rekap_medis'])) {
 			if (!empty($_POST)) {
 
-				$id_penggunaan_obat = isset($_POST['id_penggunaan_obat']) && !empty($_POST['id_penggunaan_obat']) && $_POST['id_penggunaan_obat'] != 'auto' ? $_POST['id_penggunaan_obat'] : NULL;
+				$no_rekap_medis = isset($_POST['no_rekap_medis']) && !empty($_POST['no_rekap_medis']) && $_POST['no_rekap_medis'] != 'auto' ? $_POST['no_rekap_medis'] : NULL;
+				$id_pasien =  $_POST['id_pasien'];
+				$kd_dokter = $_POST['kd_dokter'];
+				$kd_tindakan = $_POST['kd_tindakan'];
+				$tanggal_periksa = date('Y-m-d', strtotime($_POST['tanggal_periksa']));
+				$riwayat_penyakit = $_POST['riwayat_penyakit'];
+				$diagnose = $_POST['diagnose'];
 
-				$kd_obat = isset($_POST['kd_obat']) && !empty($_POST['kd_obat']) && $_POST['kd_obat'] != 'auto' ? $_POST['kd_obat'] : '';
-				$jumlah = isset($_POST['jumlah']) && !empty($_POST['jumlah']) && $_POST['jumlah'] != 'auto' ? $_POST['jumlah'] : '';
-				$no_rekap_medis = isset($_POST['no_rekap_medis']) ? $_POST['no_rekap_medis'] : '';
-				
-				$stmt1 = $pdo->prepare('SELECT * FROM obat WHERE kd_obat = ?');
-				$stmt1->execute([$kd_obat]);
-				$obat = $stmt1->fetch(PDO::FETCH_ASSOC);
-				$hargaSatuan = $obat['harga'];
-				$harga = $jumlah * $hargaSatuan;
-				// $harga = $_POST['harga'];
-				$stmt1 = $pdo->prepare('SELECT * FROM penggunaan_obat WHERE kd_obat = ?');
-				$stmt1->execute([$kd_obat]);
-				$be_jumlah = $stmt1->fetch(PDO::FETCH_ASSOC);
-
-				$stmt2 = $pdo->prepare('UPDATE obat SET stok = stok + ? WHERE kd_obat = ?');
-				$stmt2->execute([$be_jumlah['jumlah'], $kd_obat]);
-
-				
-				$stmt = $pdo->prepare('UPDATE penggunaan_obat SET id_penggunaan_obat = ?, kd_obat = ?, harga = ?, no_rekap_medis = ?, jumlah = ? WHERE id_penggunaan_obat = ?');
-				$stmt->execute([$id_penggunaan_obat, $kd_obat, $harga, $no_rekap_medis, $jumlah, $_GET['id_penggunaan_obat']]);
-				$stmt3 = $pdo->prepare('UPDATE obat SET stok = stok - ? WHERE kd_obat = ?');
-				$stmt3->execute([$jumlah, $kd_obat]);
-				$msg = header('Location: ./read.php');;
+				$stmt = $pdo->prepare('UPDATE rekap_medis SET no_rekap_medis = ?, id_pasien = ?, kd_dokter = ?, kd_tindakan = ?, tanggal_periksa = ?, riwayat_penyakit = ?, diagnose = ? WHERE no_rekap_medis = ?');
+				$stmt->execute([$no_rekap_medis, $id_pasien, $kd_dokter, $kd_tindakan, $tanggal_periksa, $riwayat_penyakit, $diagnose, $_GET['no_rekap_medis']]);
+				$msg = header('Location: ./read.php');
 			}
 
-			$stmt = $pdo->prepare('SELECT * FROM penggunaan_obat WHERE id_penggunaan_obat = ?');
-			$stmt->execute([$_GET['id_penggunaan_obat']]);
+			$stmt = $pdo->prepare('SELECT * FROM rekap_medis WHERE no_rekap_medis = ?');
+			$stmt->execute([$_GET['no_rekap_medis']]);
 			$obat = $stmt->fetch(PDO::FETCH_ASSOC);
 			if (!$obat) {
-				exit('dokter doesn\'t exist with that id_penggunaan_obat!');
+				exit('dokter doesn\'t exist with that no_rekap_medis!');
 			}
 		} else {
-			exit('No id_penggunaan_obat specified!');
+			exit('No no_rekap_medis specified!');
 		}
 		?>
 
 
 		<div class="content update">
-			<h2>Update Kamar</h2>
-			<form action="./update.php?id_penggunaan_obat=<?= $obat['id_penggunaan_obat'] ?>" method="post">
-			<label for="id_penggunaan">ID PENGGUNAAN</label>
-				<label for="kd_obat">KODE OBAT</label>
-				<input type="text" name="id_penggunaan_obat" value="<?= $obat['id_penggunaan_obat'] ?>" id="id_penggunaan_obat">
-				<select name="kd_obat" id="kd_obat" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+			<h2>Update Rekap Medis</h2>
+			<form action="./update.php?no_rekap_medis=<?= $obat['no_rekap_medis'] ?>" method="post">
+				<label for="no_rekap_medis">NO REKAP</label>
+				<label for="kd_dokter">KODE DOKTER</label>
+				<input type="text" name="no_rekap_medis" value="<?= $obat['no_rekap_medis'] ?>" id="no_rekap_medis">
+				<select name="kd_dokter" id="kd_dokter" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
 					<?php
 
 					include("../db/func.php");
 					$pdo = pdo_connect_mysql();
 					// $msg = '';
-					$sql = "SELECT * FROM obat ORDER BY kd_obat ASC";
+					$sql = "SELECT * FROM dokter ORDER BY kd_dokter ASC";
 					$data = $pdo->query($sql);
 					foreach ($data as $row) {
-						if($obat['kd_obat'] ==$row['kd_obat']){
+						if ($obat['kd_dokter'] == $row['kd_dokter']) {
 
-							echo "<option selected='selected' value=$row[kd_obat] >$row[kd_obat]-$row[nm_obat]</option>";
-						}else{
-							
-							echo "<option value=$row[kd_obat] >$row[kd_obat]-$row[nm_obat]</option>";
+							echo "<option selected='selected' value=$row[kd_dokter] >$row[kd_dokter] - $row[nama_dokter]</option>";
+						} else {
+
+							echo "<option value=$row[kd_dokter] >$row[kd_dokter] - $row[nama_dokter]</option>";
 						}
 					}
 					?>
 				</select>
+				<label for="id_pasien">ID PASIEN</label>
+				<label for="kd_tindakan">KODE TINDAKAN</label>
+				
+				<!-- <label for="no_rekap_medis">NO REKAP MEDIS</label> -->
+				<select name="id_pasien" id="id_pasien" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+					<?php
 
-				<label for="no_rekap_medis">NO REKAP MEDIS</label>
-				<label for="tanggal_pemberian">TANGGAL PEMBERIAN</label>
-				<select name="no_rekap_medis" id="no_rekap_medis" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
-				<?php
-				$sql2 = "SELECT * FROM rekap_medis ORDER BY no_rekap_medis ASC";
-				$date2 = $pdo->query($sql2);
-				foreach ($date2 as $row2) {
-					if ($row2['no_rekap_medis']==$obat['no_rekap_medis']) {
-						# code...
-						
-						echo "<option selected='selected' value=$row2[no_rekap_medis]> $row2[no_rekap_medis]</option>";
-					}else{
+					include("../db/func.php");
+					$pdo = pdo_connect_mysql();
+					// $msg = '';
+					$sql = "SELECT * FROM pasien ORDER BY id_pasien ASC";
+					$data = $pdo->query($sql);
+					foreach ($data as $row) {
+						if ($obat['id_pasien'] == $row['id_pasien']) {
 
-						echo "<option value=$row2[no_rekap_medis]> $row2[no_rekap_medis]</option>";
+							echo "<option selected='selected' value=$row[id_pasien] >$row[id_pasien] - $row[nama]</option>";
+						} else {
+
+							echo "<option value=$row[id_pasien] >$row[id_pasien] - $row[nama]</option>";
+						}
 					}
-				}
-				?>
+					?>
 				</select>
-				<input type="date" name="tanggal_pemberian" id="tanggal_pemberian" value="<?= $obat['tanggal_pemberian'] ?>">
-				<label for="no_rekap_medis">JUMLAH</label>
+				<select name="kd_tindakan" id="kd_tindakan" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+					<?php
+
+					include("../db/func.php");
+					$pdo = pdo_connect_mysql();
+					// $msg = '';
+					$sql = "SELECT * FROM tindakan ORDER BY kd_tindakan ASC";
+					$data = $pdo->query($sql);
+					foreach ($data as $row) {
+						if ($obat['kd_tindakan'] == $row['kd_tindakan']) {
+
+							echo "<option selected='selected' value=$row[kd_tindakan] >$row[kd_tindakan] - $row[nama_tindakan]</option>";
+						} else {
+
+							echo "<option value=$row[kd_tindakan] >$row[kd_tindakan] - $row[nama_tindakan]</option>";
+						}
+					}
+					?>
+				</select>
+				<label for="tanggal_periksa">TANGGAL PEMBERIAN</label>
+				
+				<label for="riwayat_penyakit">RIWAYAT PENYAKIT</label>
+				<input type="date" name="tanggal_periksa" id="tanggal_periksa" value="<?= $obat['tanggal_periksa'] ?>">
+				<!-- <label for="no_rekap_medis">JUMLAH</label> -->
+				<input type="text" name="riwayat_penyakit" id="riwayat_penyakit" value="<?= $obat['riwayat_penyakit'] ?>">
+				<label for="diagnose">DIAGNOSA</label>
 				<label></label>
-				<input type="text" name="jumlah" id="jumlah" value="<?= $obat['jumlah'] ?>">
+				<input type="text" name="diagnose" id="diagnose" value="<?= $obat['diagnose'] ?>">
 				<label></label>
 				<input onclick="myFunction()" type="submit" value="Update">
 			</form>

@@ -61,7 +61,7 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 2) { ?>
 						<li class="nav-item">
-							<a class="nav-link menu" id="kelolapasien" href="./administrasi/read.php"><i class=""></i>Kelola Pendaftaran Pasien</a>
+							<a class="nav-link menu" id="kelolapasien" href="./administrasi/kelolaRawatInap/read.php"><i class=""></i>Kelola Pendaftaran Pasien</a>
 						</li>
 					<?PHP } ?>
 

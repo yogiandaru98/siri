@@ -133,27 +133,20 @@ if ($_SESSION['username'] == '') {
 		if (!empty($_POST)) {
 
 
-			$id_penggunaan_obat = isset($_POST['id_penggunaan_obat']) && !empty($_POST['id_penggunaan_obat']) && $_POST['id_penggunaan_obat'] != 'auto' ? $_POST['id_penggunaan_obat'] : NULL;
-			$kd_obat = isset($_POST['kd_obat']) && !empty($_POST['kd_obat']) && $_POST['kd_obat'] != 'auto' ? $_POST['kd_obat'] : NULL;
-			$tanggal_pemberian = date('Y-m-d', strtotime($_POST['tanggal_pemberian']));
-			$jumlah = $_POST['jumlah'];
-			$no_rekap_medis = $_POST['no_rekap_medis'];
-			
+			$no_rekap_medis = isset($_POST['no_rekap_medis']) && !empty($_POST['no_rekap_medis']) && $_POST['no_rekap_medis'] != 'auto' ? $_POST['no_rekap_medis'] : NULL;
+			$id_pasien =  $_POST['id_pasien'];
+			$kd_dokter = $_POST['kd_dokter'] ;
+			$kd_tindakan = $_POST['kd_tindakan'];
+			$tanggal_periksa = date('Y-m-d', strtotime($_POST['tanggal_periksa']));
+			$riwayat_penyakit = $_POST['riwayat_penyakit'];
+			$diagnose = $_POST['diagnose'];
+			$biaya = '50000';
 
-			$stmt1 = $pdo->prepare('SELECT * FROM obat WHERE kd_obat = ?');
-			$stmt1->execute([$kd_obat]);
-			$obat = $stmt1->fetch(PDO::FETCH_ASSOC);
-			$hargaSatuan = $obat['harga'];
-			$harga = $jumlah * $hargaSatuan;
-
-			$sqlInsert = "INSERT INTO penggunaan_obat(id_penggunaan_obat, kd_obat, tanggal_pemberian, harga, jumlah, no_rekap_medis) 
-VALUES('{$id_penggunaan_obat}','{$kd_obat}', '{$tanggal_pemberian}', '{$harga}', '{$jumlah}', '{$no_rekap_medis}')";
+			$sqlInsert = "INSERT INTO rekap_medis(no_rekap_medis, tanggal_periksa, riwayat_penyakit, diagnose, kd_tindakan, biaya, kd_dokter, id_pasien) 
+			VALUES('{$no_rekap_medis}', '{$tanggal_periksa}', '{$riwayat_penyakit}', '{$diagnose}', '{$kd_tindakan}', '{$biaya}', '{$kd_dokter}', '{$id_pasien}')";
+// 			$sqlInsert = "INSERT INTO rekap_medis(no_rekap_medis, kd_tindakan,  id_pasien, kd_dokter, tanggal_periksa, diagnose, riwayat_penyakit, biaya)
+// VALUES('{$no_rekap_medis}', '{$kd_tindakan}', '{$kd_dokter}', '{$tanggal_periksa}', '{$diagnose}', '{$riwayat_penyakit}', '{$biaya}')";
 			$execute = $pdo->query($sqlInsert);
-
-			$stmt2 = $pdo->prepare('UPDATE obat SET stok = stok - ? WHERE kd_obat = ?');
-			$stmt2->execute([$jumlah, $kd_obat]);
-
-
 
 			$msg = header('Location: read.php');
 		}
@@ -165,40 +158,65 @@ VALUES('{$id_penggunaan_obat}','{$kd_obat}', '{$tanggal_pemberian}', '{$harga}',
 			<h2>Tambah Data Penggunaan Obat</h2>
 			<form action="create.php" method="post">
 				<!-- <label></label> -->
-				<label for="id_penggunaan">ID PENGGUNAAN</label>
-				<label for="kd_obat">KODE OBAT</label>
-				<input type="text" name="id_penggunaan_obat" value="auto" id="id_penggunaan_obat">
-				<select name="kd_obat" id="kd_obat" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+				<label for="no_rekap_medis">NO REKAP MEDIS</label>
+				<label for="kd_dokter">KODE DOKTER</label>
+				<input type="text" name="no_rekap_medis" value="auto" id="no_rekap_medis">
+				<select name="kd_dokter" id="kd_dokter" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
 					<?php
 
 					include("../db/func.php");
 					$pdo = pdo_connect_mysql();
 					// $msg = '';
-					$sql = "SELECT * FROM obat ORDER BY kd_obat ASC";
+					$sql = "SELECT * FROM dokter ORDER BY kd_dokter ASC";
 					$data = $pdo->query($sql);
-					foreach ($data as $row) {
+					foreach ($data as $row1) {
 
-						echo "<option value=$row[kd_obat] >$row[kd_obat]-$row[nm_obat]</option>";
+						echo "<option value=$row1[kd_dokter] >$row1[kd_dokter] - $row1[nama_dokter]</option>";
 					}
 					?>
 				</select>
-				<label for="no_rekap_medis">NO REKAP MEDIS</label>
-				<label for="tanggal_pemberian">TANGGAL PEMBERIAN</label>
-				<select name="no_rekap_medis" id="no_rekap_medis" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
-				<?php
-				$sql2 = "SELECT * FROM rekap_medis ORDER BY no_rekap_medis ASC";
-				$date2 = $pdo->query($sql2);
-				foreach ($date2 as $row2) {
-					echo "<option value=$row2[no_rekap_medis]> $row2[no_rekap_medis]</option>";
-				}
-				?>
+				<label for="id_pasien">ID PASIEN</label>
+				<label for="kd_tindakan">KODE TINDAKAN</label>
+				<select name="id_pasien" id="id_pasien" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+					<?php
+
+					include("../db/func.php");
+					$pdo = pdo_connect_mysql();
+					// $msg = '';
+					$sql = "SELECT * FROM pasien ORDER BY id_pasien ASC";
+					$data = $pdo->query($sql);
+					foreach ($data as $row2) {
+
+						echo "<option value=$row2[id_pasien] >$row2[id_pasien]-$row2[nama]</option>";
+					}
+					?>
 				</select>
-				<input type="date" name="tanggal_pemberian" id="tanggal_pemberian">
-				<label for="jumlah">JUMLAH</label>
+				<select name="kd_tindakan" id="kd_tindakan" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;margin-bottom: 15px;">
+					<?php
+
+					include("../db/func.php");
+					$pdo = pdo_connect_mysql();
+					// $msg = '';
+					$sql = "SELECT * FROM tindakan ORDER BY kd_tindakan ASC";
+					$data = $pdo->query($sql);
+					foreach ($data as $row3) {
+
+						echo "<option value=$row3[kd_tindakan] >$row3[kd_tindakan]-$row3[nama_tindakan]</option>";
+					}
+					?>
+				</select>
+				<label for="tanggal_periksa">TANGGAL PERIKSA</label>
+				<label for="riwayat_penyakit">RIWAYAT PENYAKIT</label>
+
+				</select>
+				<input type="date" name="tanggal_periksa" id="tanggal_periksa">
+				<input type="text" name="riwayat_penyakit" id="riwayat_penyakit">
+				<label for="diagnose">DIAGNOSA</label>
 				<label></label>
-				<input type="number" name="jumlah" id="jumlah">
+				<input type="text" name="diagnose" id="diagnose">
+
 				<label></label>
-				
+
 
 
 				<input type="submit" value="Create">

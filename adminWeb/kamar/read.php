@@ -156,7 +156,9 @@ if ($_SESSION['username'] == '') {
 						<td>KELAS</td>
 						<td>HARGA</td>
 						<td>KETERSEDIAAN</td>
+						<?PHP if ($_SESSION['role_id'] == 3) { ?>
 						<td></td>
+						<?PHP } ?>
 					</tr>
 				</thead>
 				<tbody>
@@ -166,11 +168,12 @@ if ($_SESSION['username'] == '') {
 							<td><?= $kamar['kelas_kamar'] ?></td>
 							<td><?= rupiah($kamar['harga_kamar']) ?></td>
 							<td><?= $kamar['status'] ?></td>
-
+							<?PHP if ($_SESSION['role_id'] == 3) { ?>
 							<td class="actions">
 								<a href="update.php?no_kamar=<?= $kamar['no_kamar'] ?>" class="menu edit" id="edit"><i class="fas fa-pen fa-xs"></i></a>
 								<a href="delete.php?no_kamar=<?= $kamar['no_kamar'] ?>" class="menu trash" id="hapus"><i class="fas fa-trash fa-xs"></i></a>
 							</td>
+							<?PHP } ?>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>

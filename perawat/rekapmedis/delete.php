@@ -118,20 +118,20 @@ if ($_SESSION['username'] == '') {
 $pdo = pdo_connect_mysql();
 $msg = '';
 
-if (isset($_GET['id_penggunaan_obat'])) {
+if (isset($_GET['no_rekap_medis'])) {
 
-    $stmt = $pdo->prepare('SELECT * FROM penggunaan_obat WHERE id_penggunaan_obat = ?');
-    $stmt->execute([$_GET['id_penggunaan_obat']]);
-    $id_penggunaan_obat = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$id_penggunaan_obat) {
-        exit('Dokter doesn\'t exist with that id_penggunaan_obat!');
+    $stmt = $pdo->prepare('SELECT * FROM rekap_medis WHERE no_rekap_medis = ?');
+    $stmt->execute([$_GET['no_rekap_medis']]);
+    $no_rekap_medis = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$no_rekap_medis) {
+        exit('Dokter doesn\'t exist with that no_rekap_medis!');
     }
 
     if (isset($_GET['confirm'])) {
         if ($_GET['confirm'] == 'yes') {
 
-            $stmt = $pdo->prepare('DELETE FROM penggunaan_obat WHERE id_penggunaan_obat = ?');
-            $stmt->execute([$_GET['id_penggunaan_obat']]);
+            $stmt = $pdo->prepare('DELETE FROM rekap_medis WHERE no_rekap_medis = ?');
+            $stmt->execute([$_GET['no_rekap_medis']]);
             // header("Refresh:0");
             header('Location: ./read.php');
             // $msg = header('Location: index.php');
@@ -142,7 +142,7 @@ if (isset($_GET['id_penggunaan_obat'])) {
         }
     }
 } else {
-    exit('No id_penggunaan_obat specified!');
+    exit('No no_rekap_medis specified!');
 }
 ?>
 
@@ -150,14 +150,14 @@ if (isset($_GET['id_penggunaan_obat'])) {
 <!--  -->
 
 <div class="content delete">
-	<h2>Delete Data Penggunaan Obat #<?=$id_penggunaan_obat['id_penggunaan_obat']?></h2>
+	<h2>Delete Data Rekap Medis #<?=$no_rekap_medis['no_rekap_medis']?></h2>
     <?php if ($msg): ?>
     <p><?=$msg?></p>
     <?php else: ?>
-	<p>Anda yakin ingin menghapus Data Penggunaan Obat <?=$id_penggunaan_obat['id_penggunaan_obat']?>?</p>
+	<p>Anda yakin ingin menghapus Data Penggunaan Obat <?=$no_rekap_medis['no_rekap_medis']?>?</p>
     <div class="yesno">
-    <a  href="delete.php?id_penggunaan_obat=<?=$id_penggunaan_obat['id_penggunaan_obat']?>&confirm=yes">Yes</a>
-    <a href="delete.php?id_penggunaan_obat=<?=$id_penggunaan_obat['id_penggunaan_obat']?>&confirm=no">No</a>
+    <a  href="delete.php?no_rekap_medis=<?=$no_rekap_medis['no_rekap_medis']?>&confirm=yes">Yes</a>
+    <a href="delete.php?no_rekap_medis=<?=$no_rekap_medis['no_rekap_medis']?>&confirm=no">No</a>
     </div>
     <?php endif; ?>
 </div>
