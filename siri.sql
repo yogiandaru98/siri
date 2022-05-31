@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Bulan Mei 2022 pada 19.16
+-- Waktu pembuatan: 31 Bulan Mei 2022 pada 22.09
 -- Versi server: 10.4.21-MariaDB-log
 -- Versi PHP: 8.0.10
 
@@ -47,7 +47,10 @@ INSERT INTO `akun` (`id_akun`, `username`, `password`, `role_id`) VALUES
 (16, 'udinaja', '$2y$10$K308woQA87ICDSP/ZfLLoeS5RsEPbxN4Wuw4dIpV2If.CXtJ.4Uw6', 2),
 (17, 'administrasi', '$2y$10$2T/iU9UPNSkxzPzoDj7SM.XRTxmuSZ9PtWFLStISVltdhZMrWwe26', 2),
 (18, 'suster1', '$2y$10$Fr0D.wogQKw.8DecMGWupexG8SWuAosU.JDpGdZxeoOA2OtLyYSNK', 4),
-(19, 'dokter1', '$2y$10$s5drKWNdMyH1yuOJoYm7sOvSKSgoA95B1b2D4Cd8dXAMNQIlsPkXm', 5);
+(19, 'dokter1', '$2y$10$s5drKWNdMyH1yuOJoYm7sOvSKSgoA95B1b2D4Cd8dXAMNQIlsPkXm', 5),
+(20, 'kasir2', '$2y$10$sZiB.L0hrtZW1Q16NToNpOVk0fiYa0CKn0.hPMCkkK9ttqhk7QUbW', 6),
+(21, 'sucipto', '$2y$10$BucEGusFgIlKmbScZDTx5.JaDRBJcXM2/QC.GbbRFJ1GgpYRmdzh6', 1),
+(22, 'supri', '$2y$10$XhAXT.5Txnrv8P.0jXRS/.IG.LVMI1CAK5KyLZdS/6lekb1hAGX8C', 1);
 
 -- --------------------------------------------------------
 
@@ -90,10 +93,10 @@ CREATE TABLE `kamar` (
 --
 
 INSERT INTO `kamar` (`no_kamar`, `kelas_kamar`, `harga_kamar`, `status`) VALUES
-(1, 'A', 1000000, 'TERSEDIA'),
+(1, 'A', 1000000, 'TIDAK'),
 (2, 'B', 500000, 'TIDAK'),
-(3, 'C', 250000, 'TERSEDIA'),
-(6, 'D', 2000000, 'TERSEDIA');
+(3, 'C', 250000, 'TIDAK'),
+(6, 'D', 2000000, 'TIDAK');
 
 -- --------------------------------------------------------
 
@@ -108,6 +111,16 @@ CREATE TABLE `keuangan` (
   `statusPembayaran` enum('Lunas','Belum') NOT NULL,
   `no_rawatinap` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `keuangan`
+--
+
+INSERT INTO `keuangan` (`no_transaksi`, `periode_transaksi`, `total_biaya`, `statusPembayaran`, `no_rawatinap`) VALUES
+(6, '2022-05-31', 12050000, 'Lunas', 16),
+(7, '2022-05-13', 17750000, 'Belum', 14),
+(8, '2022-06-03', 22089000, 'Belum', 17),
+(9, '2022-06-04', 16178000, 'Belum', 18);
 
 -- --------------------------------------------------------
 
@@ -128,8 +141,8 @@ CREATE TABLE `obat` (
 --
 
 INSERT INTO `obat` (`kd_obat`, `nm_obat`, `stok`, `satuan`, `harga`) VALUES
-(3, 'paracetamol', 32, 'Kaplet', 10000),
-(4, 'Tramadolaa', 188, 'Kaplet', 23000);
+(3, 'paracetamol', 21, 'Kaplet', 10000),
+(4, 'Tramadolaa', 179, 'Kaplet', 23000);
 
 -- --------------------------------------------------------
 
@@ -155,7 +168,10 @@ CREATE TABLE `pasien` (
 --
 
 INSERT INTO `pasien` (`id_pasien`, `nama`, `tgl_lahir`, `umur`, `jk`, `pekerjaan`, `alamat_rumah`, `telepon`, `tanggal_masuk`, `akun_id`) VALUES
-(3, 'yogi andaru', '2022-05-03', 12, 'Pria', 'ngoding', 'metro', '0896967867', '2022-05-28', 14);
+(3, 'yogi andaru', '2022-05-03', 12, 'Pria', 'ngoding', 'metro', '0896967867', '2022-05-28', 14),
+(8, 'satria sapta', '2010-02-03', 12, 'Pria', 'nelayan', 'Metro barat', '085125123352', '2022-05-31', 13),
+(9, 'Sucipto aja', '2002-06-11', 19, 'Pria', 'ojol', 'Bandar Lampung', '081512412251', '2022-07-01', 21),
+(10, 'supri', '2001-03-23', 21, 'Pria', 'ojol', 'Bandar Lampung', '081251241251', '2022-06-01', 22);
 
 -- --------------------------------------------------------
 
@@ -180,7 +196,12 @@ INSERT INTO `penggunaan_obat` (`id_penggunaan_obat`, `no_rekap_medis`, `tanggal_
 (6, 2, '2022-05-28', 4, 10, 230000),
 (10, 2, '2022-05-11', 4, 12, 20000),
 (11, 1, '2022-05-18', 3, 12, 230000),
-(12, 1, '2022-05-18', 4, 12, 30000);
+(12, 11, '2022-05-18', 4, 12, 30000),
+(13, 11, '2022-06-01', 3, 5, 50000),
+(14, 12, '2022-06-23', 3, 2, 20000),
+(15, 12, '2022-06-17', 4, 3, 69000),
+(16, 13, '2022-06-01', 3, 4, 40000),
+(17, 13, '2022-06-09', 4, 6, 138000);
 
 -- --------------------------------------------------------
 
@@ -206,7 +227,10 @@ CREATE TABLE `rawat_inap` (
 --
 
 INSERT INTO `rawat_inap` (`no_rawatinap`, `no_rekap_medis`, `id_pasien`, `tanggal_masuk`, `tanggal_keluar`, `status`, `biaya_tindakan`, `biaya_obat`, `biaya_kamar`, `no_kamar`) VALUES
-(14, 2, 3, '2022-05-28', '2022-05-13', 'Stabil', 10000000, 250000, 500000, 2);
+(14, 2, 3, '2022-05-28', '2022-05-13', 'Kritis', 10000000, 250000, 500000, 2),
+(16, 11, 8, '2022-05-31', '2022-06-02', 'Stabil', 10000000, 50000, 1000000, 1),
+(17, 12, 9, '2022-07-01', '2022-06-03', 'Kritis', 15000000, 89000, 250000, 3),
+(18, 13, 10, '2022-06-01', '2022-06-04', 'Stabil', 10000000, 178000, 2000000, 6);
 
 -- --------------------------------------------------------
 
@@ -231,7 +255,10 @@ CREATE TABLE `rekap_medis` (
 
 INSERT INTO `rekap_medis` (`no_rekap_medis`, `tanggal_periksa`, `riwayat_penyakit`, `diagnose`, `kd_tindakan`, `biaya`, `kd_dokter`, `id_pasien`) VALUES
 (1, '2022-05-26', 'kesurupan', 'jantung', 2, 50000, 34, 3),
-(2, '2022-05-11', 'ASAM URAT', 'diare', 2, 50000, 34, 3);
+(2, '2022-05-11', 'ASAM URAT', 'diare', 2, 50000, 34, 3),
+(11, '2022-06-01', 'darah tinggi', 'ambeyen', 2, 50000, 34, 8),
+(12, '2022-07-01', 'budeg', 'tuli', 1, 50000, 34, 9),
+(13, '2001-02-02', 'keselo', 'asam urat', 2, 50000, 34, 10);
 
 -- --------------------------------------------------------
 
@@ -366,7 +393,7 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT untuk tabel `akun`
 --
 ALTER TABLE `akun`
-  MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `dokter`
@@ -384,7 +411,7 @@ ALTER TABLE `kamar`
 -- AUTO_INCREMENT untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
-  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `obat`
@@ -396,25 +423,25 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `penggunaan_obat`
 --
 ALTER TABLE `penggunaan_obat`
-  MODIFY `id_penggunaan_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_penggunaan_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `rawat_inap`
 --
 ALTER TABLE `rawat_inap`
-  MODIFY `no_rawatinap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `no_rawatinap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `rekap_medis`
 --
 ALTER TABLE `rekap_medis`
-  MODIFY `no_rekap_medis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `no_rekap_medis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `roles`
