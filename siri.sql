@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2022 at 02:58 PM
--- Server version: 10.4.21-MariaDB-log
--- PHP Version: 8.0.10
+-- Waktu pembuatan: 30 Bulan Mei 2022 pada 19.16
+-- Versi server: 10.4.21-MariaDB-log
+-- Versi PHP: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `akun`
+-- Struktur dari tabel `akun`
 --
 
 CREATE TABLE `akun` (
@@ -35,12 +35,12 @@ CREATE TABLE `akun` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `akun`
+-- Dumping data untuk tabel `akun`
 --
 
 INSERT INTO `akun` (`id_akun`, `username`, `password`, `role_id`) VALUES
 (3, 'adminWeb', '$2y$10$2rOids17E.XNXjfy/TWiU.PXZoidadexhBq3njoD4cFtfkPqBnYjm', 3),
-(4, 'admin', '$2y$10$H4jarhaNdIu0xdNivWO7D.lGnH8.YusgXFif9wgZ9iigf8L69d4va', 3),
+(4, 'admin', '$2y$10$ywN8P09f1bGMIrQkRFXwFehJy0jiezNGfEBCmggY8UEImHnPrYFiS', 2),
 (11, 'asdfg', '$2y$10$x8PVSV93XipvmQSrlwKp1O75v8VIba/yIcSICB/B8Luz4H52TwgOW', 6),
 (13, 'satriapasien', '$2y$10$UU0N6/VcTtZFeGlPsKeweuI.Un5Kgx1tbc5i9JsxfYt8iUYUpy7UW', 1),
 (14, 'yogip', '$2y$10$paD3c45yyzKtjyoOg3LUwu/HsyK1SlIeYpOJqtF5JCUsrC2wTGeHq', 1),
@@ -52,7 +52,7 @@ INSERT INTO `akun` (`id_akun`, `username`, `password`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dokter`
+-- Struktur dari tabel `dokter`
 --
 
 CREATE TABLE `dokter` (
@@ -66,7 +66,7 @@ CREATE TABLE `dokter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `dokter`
+-- Dumping data untuk tabel `dokter`
 --
 
 INSERT INTO `dokter` (`kd_dokter`, `nama_dokter`, `alamat`, `no_telepon`, `resep_dokter`, `jenis_dokter`, `akun_id`) VALUES
@@ -75,7 +75,7 @@ INSERT INTO `dokter` (`kd_dokter`, `nama_dokter`, `alamat`, `no_telepon`, `resep
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kamar`
+-- Struktur dari tabel `kamar`
 --
 
 CREATE TABLE `kamar` (
@@ -86,18 +86,19 @@ CREATE TABLE `kamar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kamar`
+-- Dumping data untuk tabel `kamar`
 --
 
 INSERT INTO `kamar` (`no_kamar`, `kelas_kamar`, `harga_kamar`, `status`) VALUES
-(1, 'A', 1000000, 'TIDAK'),
-(2, 'B', 500000, 'TERSEDIA'),
-(3, 'D', 250000, 'TERSEDIA');
+(1, 'A', 1000000, 'TERSEDIA'),
+(2, 'B', 500000, 'TIDAK'),
+(3, 'C', 250000, 'TERSEDIA'),
+(6, 'D', 2000000, 'TERSEDIA');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `keuangan`
+-- Struktur dari tabel `keuangan`
 --
 
 CREATE TABLE `keuangan` (
@@ -108,17 +109,10 @@ CREATE TABLE `keuangan` (
   `no_rawatinap` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `keuangan`
---
-
-INSERT INTO `keuangan` (`no_transaksi`, `periode_transaksi`, `total_biaya`, `statusPembayaran`, `no_rawatinap`) VALUES
-(1, '2022-05-27', 10000000, 'Belum', 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `obat`
+-- Struktur dari tabel `obat`
 --
 
 CREATE TABLE `obat` (
@@ -130,7 +124,7 @@ CREATE TABLE `obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `obat`
+-- Dumping data untuk tabel `obat`
 --
 
 INSERT INTO `obat` (`kd_obat`, `nm_obat`, `stok`, `satuan`, `harga`) VALUES
@@ -140,7 +134,7 @@ INSERT INTO `obat` (`kd_obat`, `nm_obat`, `stok`, `satuan`, `harga`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pasien`
+-- Struktur dari tabel `pasien`
 --
 
 CREATE TABLE `pasien` (
@@ -157,7 +151,7 @@ CREATE TABLE `pasien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pasien`
+-- Dumping data untuk tabel `pasien`
 --
 
 INSERT INTO `pasien` (`id_pasien`, `nama`, `tgl_lahir`, `umur`, `jk`, `pekerjaan`, `alamat_rumah`, `telepon`, `tanggal_masuk`, `akun_id`) VALUES
@@ -166,7 +160,7 @@ INSERT INTO `pasien` (`id_pasien`, `nama`, `tgl_lahir`, `umur`, `jk`, `pekerjaan
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penggunaan_obat`
+-- Struktur dari tabel `penggunaan_obat`
 --
 
 CREATE TABLE `penggunaan_obat` (
@@ -179,41 +173,45 @@ CREATE TABLE `penggunaan_obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `penggunaan_obat`
+-- Dumping data untuk tabel `penggunaan_obat`
 --
 
 INSERT INTO `penggunaan_obat` (`id_penggunaan_obat`, `no_rekap_medis`, `tanggal_pemberian`, `kd_obat`, `jumlah`, `harga`) VALUES
-(6, 2, '2022-05-28', 4, 10, 230000);
+(6, 2, '2022-05-28', 4, 10, 230000),
+(10, 2, '2022-05-11', 4, 12, 20000),
+(11, 1, '2022-05-18', 3, 12, 230000),
+(12, 1, '2022-05-18', 4, 12, 30000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rawat_inap`
+-- Struktur dari tabel `rawat_inap`
 --
 
 CREATE TABLE `rawat_inap` (
   `no_rawatinap` int(11) NOT NULL,
   `no_rekap_medis` int(11) NOT NULL,
+  `id_pasien` int(255) NOT NULL,
   `tanggal_masuk` date NOT NULL,
   `tanggal_keluar` date NOT NULL,
   `status` enum('Kritis','Stabil') NOT NULL,
-  `total_perawatan` int(255) NOT NULL,
-  `total_obat` int(255) NOT NULL,
-  `total_kamar` int(255) NOT NULL,
+  `biaya_tindakan` int(255) NOT NULL,
+  `biaya_obat` int(255) NOT NULL,
+  `biaya_kamar` int(255) NOT NULL,
   `no_kamar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `rawat_inap`
+-- Dumping data untuk tabel `rawat_inap`
 --
 
-INSERT INTO `rawat_inap` (`no_rawatinap`, `no_rekap_medis`, `tanggal_masuk`, `tanggal_keluar`, `status`, `total_perawatan`, `total_obat`, `total_kamar`, `no_kamar`) VALUES
-(1, 1, '2022-05-27', '2022-05-28', 'Stabil', 10000000, 2000000, 3000000, 1);
+INSERT INTO `rawat_inap` (`no_rawatinap`, `no_rekap_medis`, `id_pasien`, `tanggal_masuk`, `tanggal_keluar`, `status`, `biaya_tindakan`, `biaya_obat`, `biaya_kamar`, `no_kamar`) VALUES
+(14, 2, 3, '2022-05-28', '2022-05-13', 'Stabil', 10000000, 250000, 500000, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rekap_medis`
+-- Struktur dari tabel `rekap_medis`
 --
 
 CREATE TABLE `rekap_medis` (
@@ -228,7 +226,7 @@ CREATE TABLE `rekap_medis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `rekap_medis`
+-- Dumping data untuk tabel `rekap_medis`
 --
 
 INSERT INTO `rekap_medis` (`no_rekap_medis`, `tanggal_periksa`, `riwayat_penyakit`, `diagnose`, `kd_tindakan`, `biaya`, `kd_dokter`, `id_pasien`) VALUES
@@ -238,7 +236,7 @@ INSERT INTO `rekap_medis` (`no_rekap_medis`, `tanggal_periksa`, `riwayat_penyaki
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Struktur dari tabel `roles`
 --
 
 CREATE TABLE `roles` (
@@ -247,7 +245,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `roles`
+-- Dumping data untuk tabel `roles`
 --
 
 INSERT INTO `roles` (`id_role`, `role_name`) VALUES
@@ -261,7 +259,7 @@ INSERT INTO `roles` (`id_role`, `role_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tindakan`
+-- Struktur dari tabel `tindakan`
 --
 
 CREATE TABLE `tindakan` (
@@ -271,7 +269,7 @@ CREATE TABLE `tindakan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tindakan`
+-- Dumping data untuk tabel `tindakan`
 --
 
 INSERT INTO `tindakan` (`kd_tindakan`, `nama_tindakan`, `biaya`) VALUES
@@ -283,47 +281,47 @@ INSERT INTO `tindakan` (`kd_tindakan`, `nama_tindakan`, `biaya`) VALUES
 --
 
 --
--- Indexes for table `akun`
+-- Indeks untuk tabel `akun`
 --
 ALTER TABLE `akun`
   ADD PRIMARY KEY (`id_akun`),
   ADD KEY `role_id` (`role_id`);
 
 --
--- Indexes for table `dokter`
+-- Indeks untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   ADD PRIMARY KEY (`kd_dokter`),
   ADD KEY `akun_id` (`akun_id`);
 
 --
--- Indexes for table `kamar`
+-- Indeks untuk tabel `kamar`
 --
 ALTER TABLE `kamar`
   ADD PRIMARY KEY (`no_kamar`);
 
 --
--- Indexes for table `keuangan`
+-- Indeks untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
   ADD PRIMARY KEY (`no_transaksi`),
   ADD KEY `keuangan_ibfk_1` (`no_rawatinap`);
 
 --
--- Indexes for table `obat`
+-- Indeks untuk tabel `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`kd_obat`);
 
 --
--- Indexes for table `pasien`
+-- Indeks untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   ADD PRIMARY KEY (`id_pasien`),
   ADD KEY `pasien_ibfk_1` (`akun_id`);
 
 --
--- Indexes for table `penggunaan_obat`
+-- Indeks untuk tabel `penggunaan_obat`
 --
 ALTER TABLE `penggunaan_obat`
   ADD PRIMARY KEY (`id_penggunaan_obat`),
@@ -331,15 +329,16 @@ ALTER TABLE `penggunaan_obat`
   ADD KEY `penggunaan_obat_ibfk_1` (`kd_obat`);
 
 --
--- Indexes for table `rawat_inap`
+-- Indeks untuk tabel `rawat_inap`
 --
 ALTER TABLE `rawat_inap`
   ADD PRIMARY KEY (`no_rawatinap`),
   ADD KEY `rawat_inap_ibfk_2` (`no_kamar`),
-  ADD KEY `rawat_inap_ibfk_1` (`no_rekap_medis`);
+  ADD KEY `rawat_inap_ibfk_1` (`no_rekap_medis`),
+  ADD KEY `id_pasien` (`id_pasien`);
 
 --
--- Indexes for table `rekap_medis`
+-- Indeks untuk tabel `rekap_medis`
 --
 ALTER TABLE `rekap_medis`
   ADD PRIMARY KEY (`no_rekap_medis`),
@@ -348,131 +347,132 @@ ALTER TABLE `rekap_medis`
   ADD KEY `kd_dokter` (`kd_dokter`);
 
 --
--- Indexes for table `roles`
+-- Indeks untuk tabel `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id_role`);
 
 --
--- Indexes for table `tindakan`
+-- Indeks untuk tabel `tindakan`
 --
 ALTER TABLE `tindakan`
   ADD PRIMARY KEY (`kd_tindakan`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `akun`
+-- AUTO_INCREMENT untuk tabel `akun`
 --
 ALTER TABLE `akun`
   MODIFY `id_akun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `dokter`
+-- AUTO_INCREMENT untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   MODIFY `kd_dokter` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT for table `kamar`
+-- AUTO_INCREMENT untuk tabel `kamar`
 --
 ALTER TABLE `kamar`
-  MODIFY `no_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `no_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `keuangan`
+-- AUTO_INCREMENT untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
-  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `no_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `obat`
+-- AUTO_INCREMENT untuk tabel `obat`
 --
 ALTER TABLE `obat`
   MODIFY `kd_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `pasien`
+-- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `penggunaan_obat`
+-- AUTO_INCREMENT untuk tabel `penggunaan_obat`
 --
 ALTER TABLE `penggunaan_obat`
-  MODIFY `id_penggunaan_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_penggunaan_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `rawat_inap`
+-- AUTO_INCREMENT untuk tabel `rawat_inap`
 --
 ALTER TABLE `rawat_inap`
-  MODIFY `no_rawatinap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `no_rawatinap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `rekap_medis`
+-- AUTO_INCREMENT untuk tabel `rekap_medis`
 --
 ALTER TABLE `rekap_medis`
   MODIFY `no_rekap_medis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT untuk tabel `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `tindakan`
+-- AUTO_INCREMENT untuk tabel `tindakan`
 --
 ALTER TABLE `tindakan`
   MODIFY `kd_tindakan` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `akun`
+-- Ketidakleluasaan untuk tabel `akun`
 --
 ALTER TABLE `akun`
   ADD CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id_role`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `dokter`
+-- Ketidakleluasaan untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   ADD CONSTRAINT `dokter_ibfk_1` FOREIGN KEY (`akun_id`) REFERENCES `akun` (`id_akun`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `keuangan`
+-- Ketidakleluasaan untuk tabel `keuangan`
 --
 ALTER TABLE `keuangan`
   ADD CONSTRAINT `keuangan_ibfk_1` FOREIGN KEY (`no_rawatinap`) REFERENCES `rawat_inap` (`no_rawatinap`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `pasien`
+-- Ketidakleluasaan untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   ADD CONSTRAINT `pasien_ibfk_1` FOREIGN KEY (`akun_id`) REFERENCES `akun` (`id_akun`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `penggunaan_obat`
+-- Ketidakleluasaan untuk tabel `penggunaan_obat`
 --
 ALTER TABLE `penggunaan_obat`
   ADD CONSTRAINT `penggunaan_obat_ibfk_1` FOREIGN KEY (`kd_obat`) REFERENCES `obat` (`kd_obat`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `penggunaan_obat_ibfk_2` FOREIGN KEY (`no_rekap_medis`) REFERENCES `rekap_medis` (`no_rekap_medis`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `rawat_inap`
+-- Ketidakleluasaan untuk tabel `rawat_inap`
 --
 ALTER TABLE `rawat_inap`
   ADD CONSTRAINT `rawat_inap_ibfk_1` FOREIGN KEY (`no_rekap_medis`) REFERENCES `rekap_medis` (`no_rekap_medis`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `rawat_inap_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `kamar` (`no_kamar`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `rawat_inap_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `kamar` (`no_kamar`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `rawat_inap_ibfk_3` FOREIGN KEY (`id_pasien`) REFERENCES `rekap_medis` (`id_pasien`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `rekap_medis`
+-- Ketidakleluasaan untuk tabel `rekap_medis`
 --
 ALTER TABLE `rekap_medis`
   ADD CONSTRAINT `rekap_medis_ibfk_4` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON DELETE CASCADE ON UPDATE CASCADE,

@@ -61,7 +61,7 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 2) { ?>
 						<li class="nav-item">
-							<a class="nav-link menu" id="kelolapasien" href="./administrasi/kelolaRawatInap/read.php"><i class=""></i>Kelola Pendaftaran Pasien</a>
+							<a class="nav-link menu" id="kelolapasien" href="./administrasi/kelolaRawatInap/read.php"><i class=""></i>Kelola Rawat Inap</a>
 						</li>
 					<?PHP } ?>
 
@@ -97,7 +97,7 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 6) { ?>
 						<li class="nav-item">
-							<a class="nav-link menu" id="validasipembayaran" href="./kasir/validasipembayaran.php"><i class=""></i>Validasi Pembayaran</a>
+							<a class="nav-link menu" id="validasipembayaran" href="./kasir/validasiPembayaran/read.php"><i class=""></i>Validasi Pembayaran</a>
 						</li>
 					<?PHP } ?>
 
