@@ -174,7 +174,7 @@ if ($_SESSION['username'] == '') {
 			$stmt9->execute([$rekap_medis['id_pasien']]);
 			$rawatinap = $stmt9->fetch(PDO::FETCH_ASSOC);
 			$totalKamar = dateDiffInDays($tanggal_keluar, $pasien['tanggal_masuk']) * $kamar['harga_kamar'];
-			$totalBiaya = $penggunaan_obat['harga']+$tindakan['biaya']+$totalKamar;
+			$totalBiaya = $penggunaan_obat['harga']+$tindakan['biaya']+$totalKamar+$rekap_medis['biaya'];
 			$statusPembayaran = "Belum";
 			$sqlInsertTotal= "INSERT INTO keuangan(periode_transaksi, total_biaya, statusPembayaran, no_rawatinap, no_transaksi)
 			VALUES('{$pasien['tanggal_masuk']}','{$totalBiaya}' , '{$statusPembayaran}', '{$rawatinap['no_rawatinap']}', '{$no_transaksi}')";

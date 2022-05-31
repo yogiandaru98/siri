@@ -155,7 +155,7 @@ if ($_SESSION['username'] == '') {
 
 
 		<div class="content update">
-			<h2>Tambah Data Penggunaan Obat</h2>
+			<h2>Tambah Data Rekap Medis</h2>
 			<form action="create.php" method="post">
 				<!-- <label></label> -->
 				<label for="no_rekap_medis">NO REKAP MEDIS</label>

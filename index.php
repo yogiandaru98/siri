@@ -6,7 +6,7 @@
 
 session_start();
 
-if ($_SESSION['username'] == '') {
+if (isset($_SESSION['username'])=='') {
 	echo "<script>
     alert('Anda Harus Login terlebih dahulu');
     window.location.href='./auth/fmasuk.php';
@@ -67,14 +67,14 @@ if ($_SESSION['username'] == '') {
 
 					<?PHP if ($_SESSION['role_id'] == 1) { ?>
 						<li class="nav-item">
-							<a class="nav-link menu" id="daftarrawatinap" href="./pasien/daftarrawatinap.php"><i class=""></i>Pendaftaran Rawat Inap</a>
+							<a class="nav-link menu" id="daftarrawatinap" href="./pasien/pendaftaran/read.php"><i class=""></i>Pendaftaran Rawat Inap</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link menu" id="bayarrawatinap" href="./pasien/bayarrawatinap.php"><i class=""></i>Pembayaran Rawat Inap</a>
+							<a class="nav-link menu" id="bayarrawatinap" href="./pasien/pembayaran/read.php"><i class=""></i>Pembayaran Rawat Inap</a>
 						</li>
-						<!-- <li class="nav-item">
-							<a class="nav-link menu" id="daftarakun" href="./pasien/daftarakun.php"><i class=""></i>Pendaftaran Akun</a>
-						</li> -->
+						<li class="nav-item">
+							<a class="nav-link menu" id="daftarakun" href="./pasien/rekapMedis/read.php"><i class=""></i>Rekap Medis</a>
+						</li>
 					<?PHP } ?>
 
 					<?PHP if ($_SESSION['role_id'] == 4) { ?>

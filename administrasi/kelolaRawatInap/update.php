@@ -250,24 +250,15 @@ if ($_SESSION['username'] == '') {
 				<label></label>
 				<select name="status" id="status" class="form-select" aria-label="Default select example" style="width: 400px;margin-right: 25px;
 				margin-bottom: 15px;">
-					<?php
+				<?PHP if ($rawatInap['status'] == 'Stabil') { ?>
+					<option selected='selected' value='Stabil'>Stabil</option>
+					<option value='Kritis'>Kritis</option>
+					<?PHP } ?>
+				<?PHP if ($rawatInap['status'] == 'Kritis') { ?>
+					<option value='Stabil'>Stabil</option>
+					<option selected='selected' value='Kritis'>Kritis</option>
+					<?PHP } ?>
 
-					include("../db/func.php");
-					$pdo = pdo_connect_mysql();
-					// $msg = '';
-					$sql = "SELECT * FROM rawat_inap ORDER BY no_rawatinap ASC";
-					$data2 = $pdo->query($sql);
-					foreach ($data2 as $row2) {
-						// $harga_kamar = rupiah($row2['harga_kamar']);
-						if ($rawatInap['no_rawatinap'] == $row['no_rawatinap']) {
-
-							echo "<option selected='selected' value=$row2[status]>$row2[status]</option>";
-						} else {
-
-							echo "<option value=$row2[status]>$row2[status]</option>";
-						}
-					}
-					?>
 
 				</select>
 

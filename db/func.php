@@ -15,7 +15,15 @@ function rupiah($angka){
     $hasil = "Rp" . number_format($angka, '2', ',', '.');
     return $hasil;
 }
-
+function getAge($dob){
+    $bday = new DateTime($dob);
+    $today = new Datetime(date('m.d.y'));
+    if($bday>$today){
+      return '0';
+    }
+    $diff = $today->diff($bday);
+    return $diff->y;
+  }
 function dateDiffInDays($date1, $date2) 
 {
     // Calculating the difference in timestamps
